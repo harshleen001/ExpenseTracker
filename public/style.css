@@ -1,0 +1,352 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Theme */
+:root {
+  --bg: #fdfdfd;
+  --primary: #6c63ff;
+  --primary-hover: #574b90;
+  --accent: #ffd6e0;
+  --text: #333;
+  --input-bg: #f5f5f5;
+  --white: #ffffff;
+  --border: #ddd;
+  --radius: 12px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --font: 'Segoe UI', 'Inter', sans-serif;
+}
+
+/* Base Styles */
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* Header */
+h1 {
+  font-size: 2.5rem;
+  text-align: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(120deg, var(--primary), var(--accent));
+  color: white;
+  margin-bottom: 2rem;
+   font-family: 'Pacifico', cursive;
+font-weight: lighter;
+  box-shadow: var(--shadow);
+}
+
+/* Sections */
+.section {
+  padding: 1.5rem 4vw;
+  margin-bottom: 1.2rem;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+h2, h3 {
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 1rem;
+  font-family: 'Baloo 2', cursive;
+}
+
+/* Add Expense Form */
+form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  align-items: center;
+}
+
+form input,
+form select {
+  padding: 0.75rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background-color: var(--input-bg);
+  font-size: 1rem;
+  width: 100%;
+  max-width: 240px;
+  transition: 0.3s ease;
+}
+
+form input:focus,
+form select:focus {
+  border-color: var(--primary);
+  outline: none;
+  background-color: white;
+}
+
+/* Filter Section — compact and horizontal */
+.filter-section {
+  background: var(--white);
+  padding: 0.5rem 2vw;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+  min-height: auto;
+}
+
+.filter-section h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 0.2rem;
+  text-align: center;
+}
+
+.filter-section form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.filter-section select,
+.filter-section input[type="date"] {
+  height: 38px;
+  font-size: 0.95rem;
+  padding: 0 0.75rem;
+  background-color: var(--input-bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+/* Buttons */
+button {
+  padding: 0.6rem 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  font-weight: 600;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+/* Expense List */
+.expenses-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.expenses-section li {
+  background: var(--input-bg);
+  margin: 1rem 0;
+  padding: 1rem 1.2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.expenses-section li div {
+  flex: 1;
+  min-width: 200px;
+  font-size: 1rem;
+}
+
+.expenses-section button {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  margin-left: 0.6rem;
+  color: var(--primary);
+  transition: 0.2s;
+}
+
+.expenses-section button:hover {
+  color: var(--primary-hover);
+}
+
+/* Chart Modal */
+#chartModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#chartModal > div {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: var(--radius);
+  max-width: 600px;
+  width: 90%;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+#chartModal canvas {
+  max-width: 100%;
+}
+
+#chartModal button[onclick*="closeChartModal"] {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Auth Pages (Login/Register) */
+body > h1:first-child {
+  background: var(--primary-hover);
+}
+
+form > div {
+  width: 100%;
+  max-width: 400px;
+  margin: 1rem auto;
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+a {
+  color: var(--border);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a[href="/"] {
+  display: block;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  form {
+    flex-direction: column;
+  }
+
+  .expenses-section li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .expenses-section li div {
+    margin-bottom: 0.5rem;
+  }
+
+  .filter-section form {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Auth Page Heading */
+.auth-header {
+  font-size: 2.2rem;
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  font-family: 'Pacifico', cursive;
+  color: var(--primary);
+}
+
+/* Centered Auth Form */
+.auth-form {
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Labels and Inputs */
+.auth-form label {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+}
+
+.auth-form input {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  font-size: 1rem;
+  background-color: var(--input-bg);
+  transition: 0.3s ease;
+}
+
+.auth-form input:focus {
+  border-color: var(--primary);
+  background-color: white;
+  outline: none;
+}
+
+/* Submit Button */
+.auth-form button {
+  padding: 0.7rem 1.2rem;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.auth-form button:hover {
+  background-color: var(--primary-hover);
+}
+
+/* Auth Link Text */
+.auth-form p {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+.auth-form a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-form a:hover {
+  text-decoration: underline;
+}

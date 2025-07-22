@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Baloo+2&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <h1>💸 Expense Tracker</h1>
+
+    <!-- Add Expense -->
+    <div class="section">
+      <form action="/add" method="POST">
+        <input type="text" name="description" placeholder="Description" required />
+        <input type="number" name="amount" placeholder="Amount" required />
+        <select name="category">
+          <option value="Food">Food</option>
+          <option value="Transport">Transport</option>
+          <option value="Entertainment">Entertainment</option>
+          <option value="Bills">Bills</option>
+          <option value="Other">Other</option>
+        </select>
+        <button type="submit">Add Expense</button>
+      </form>
+    </div>
+
+    <!-- Filter Form -->
+    <div class="section">
+      <h2>🔍 Filter Expenses</h2>
+      <form action="/" method="GET">
+        <select name="category">
+          <option value="All" <%=selectedCategory==='All' ? 'selected' : '' %>>All</option>
+          <option value="Food" <%=selectedCategory==='Food' ? 'selected' : '' %>>Food</option>
+          <option value="Transport" <%=selectedCategory==='Transport' ? 'selected' : '' %>>Transport</option>
+          <option value="Entertainment" <%=selectedCategory==='Entertainment' ? 'selected' : '' %>>Entertainment</option>
+          <option value="Bills" <%=selectedCategory==='Bills' ? 'selected' : '' %>>Bills</option>
+          <option value="Other" <%=selectedCategory==='Other' ? 'selected' : '' %>>Other</option>
+        </select>
+        <input type="date" name="fromDate" value="<%= fromDate || '' %>" />
+        <input type="date" name="toDate" value="<%= toDate || '' %>" />
+        <button type="submit">Apply Filter</button>
+      </form>
+    </div>
+
+    <!-- Expenses List -->
+    <% let total=0; %>
+    <div class="section expenses-section">
+      <h2>📄 Expenses</h2>
+      <% if (expenses.length===0) { %>
+        <p>No expenses found.</p>
+      <% } else { %>
+        <ul>
+          <% expenses.forEach(exp=> { %>
+            <li>
+              <div>
+                <strong><%= exp.description %></strong> – ₹<%= exp.amount %> (<%= exp.category %>) - 
+                <small><%= new Date(exp.createdAt).toLocaleDateString() %></small>
+              </div>
+              <% total +=parseFloat(exp.amount); %>
+              <form action="/delete/<%= exp._id %>" method="POST" style="display:inline;">
+                <button type="submit">❌</button>
+              </form>
+              <form action="/edit/<%= exp._id %>" method="GET" style="display:inline;">
+                <button type="submit">✏️</button>
+              </form>
+            </li>
+          <% }) %>
+        </ul>
+      <% } %>
+    </div>
+
+    <h3>Total Expenses: ₹<%= total %></h3>
+
+    <!-- Chart + Logout Buttons -->
+    <div class="section" style="margin-top: 1rem;">
+      <button onclick="openChartModal()">📊 Show Expense Chart</button>
+      <button><a href="/logout">Log Out</a></button>
+    </div>
+  </div>
+
+  <!-- Chart Modal -->
+  <div id="chartModal" style="display: none; position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);
+    justify-content: center; align-items: center; z-index: 9999;">
+    <div style="background: white; padding: 2rem; border-radius: 10px; position: relative; max-width: 600px; width: 90%;">
+      <button onclick="closeChartModal()" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 1.5rem; cursor: pointer;">❌</button>
+      <h3 style="margin-top: 0;">📈 Expense Chart</h3>
+      <canvas id="expenseChart" width="400" height="200"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const labels = <%- chartLabels %>;
+    const dataValues = <%- chartValues %>;
+    let chart;
+
+    function openChartModal() {
+      document.getElementById('chartModal').style.display = 'flex';
+      if (!chart) {
+        const ctx = document.getElementById('expenseChart').getContext('2d');
+        chart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Expenses by Category',
+              data: dataValues,
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.7)',
+                'rgba(54, 162, 235, 0.7)',
+                'rgba(255, 206, 86, 0.7)',
+                'rgba(75, 192, 192, 0.7)',
+                'rgba(153, 102, 255, 0.7)'
+              ]
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: 'bottom' },
+              title: { display: true, text: 'Category-wise Expenses' }
+            }
+          }
+        });
+      }
+    }
+
+    function closeChartModal() {
+      document.getElementById('chartModal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

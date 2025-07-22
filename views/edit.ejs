@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Expense</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Baloo+2&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <h1>Edit Expense</h1>
+  <form action="/edit/<%= expense._id %>" method="POST">
+    <input type="text" name="description" value="<%= expense.description %>" required />
+    <input type="number" name="amount" value="<%= expense.amount %>" required />
+    <select name="category">
+      <option value="Food" <%= expense.category === 'Food' ? 'selected' : '' %>>Food</option>
+      <option value="Transport" <%= expense.category === 'Transport' ? 'selected' : '' %>>Transport</option>
+      <option value="Entertainment" <%= expense.category === 'Entertainment' ? 'selected' : '' %>>Entertainment</option>
+      <option value="Bills" <%= expense.category === 'Bills' ? 'selected' : '' %>>Bills</option>
+      <option value="Other" <%= expense.category === 'Other' ? 'selected' : '' %>>Other</option>
+    </select>
+    <button type="submit">Save Changes</button>
+  </form>
+    <a href="/">Back to Expenses</a>
+</body>
+</html>
